@@ -28,3 +28,9 @@ function handleFiles(files) {
         fileNameDisplay.textContent = file.name;
     }
 }
+ // Show the loading spinner when the form is submitted
+        const form = document.getElementById('uploadForm');
+        form.onsubmit = function() {
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+        };

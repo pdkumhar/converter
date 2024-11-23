@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-
+ <div class="container">
     <h1>Upload a Video File for Conversion</h1>
     <!-- Show the message if it exists -->
     {% if message %}
@@ -49,18 +49,9 @@
             <button>Download</button>
         </a>
     {% endif %}
-
+</div>
     <!-- Link to external JavaScript file -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-
-    <script>
-        // Show the loading spinner when the form is submitted
-        const form = document.getElementById('uploadForm');
-        form.onsubmit = function() {
-            // Show loading spinner
-            document.getElementById('loading').style.display = 'block';
-        };
-    </script>
 
 </body>
 </html>
