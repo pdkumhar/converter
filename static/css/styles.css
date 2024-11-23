@@ -89,6 +89,12 @@ button[type="submit"] {
     height: 50px;
     animation: spin 1s linear infinite;
     margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto; /* Center the spinner horizontally */
+    position: absolute;  /* Take it out of the normal flow */
+    top: 50%; /* Vertically center the spinner */
+    left: 50%; /* Horizontally center the spinner */
+    transform: translate(-50%, -50%); /* Offset the spinner by half its width and height */
 }
 
 /* Animation for spinning */
@@ -96,6 +102,7 @@ button[type="submit"] {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 
 /* Style for the download button */
 a button {
