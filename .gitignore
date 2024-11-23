@@ -1,0 +1,9 @@
+# Ignore video files (e.g., .mp4, .mov)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Ignore the 'converted' folder
+converted/
+uploads/

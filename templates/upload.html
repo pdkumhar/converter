@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Upload and Conversion</title>
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <h1>Upload a Video File for Conversion</h1>
+    <!-- Show the message if it exists -->
+    {% if message %}
+        <p style="color: red;">{{ message }}</p>
+    {% endif %}
+    <!-- Form with hidden file input field -->
+    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+        <!-- Drag and Drop Area -->
+        <div id="drop-area" onclick="document.getElementById('fileElem').click();">
+            <p>Drag & Drop Video Here or Click to Select</p>
+            <input type="file" id="fileElem" name="file" accept="video/*" onchange="handleFiles(this.files)">
+        </div>
+
+        <!-- Display the selected file name -->
+        <div id="file-name">No file selected</div>
+
+        <!-- Dropdown for output format -->
+        <label for="format">Select Output Format:</label>
+        <select name="format" id="format">
+            <option value="mp4">MP4</option>
+            <option value="avi">AVI</option>
+            <option value="mov">MOV</option>
+            <option value="mkv">MKV</option>
+            <option value="wmv">WMV</option>
+        </select>
+
+        <!-- Submit button -->
+        <button type="submit">Convert</button>
+    </form>
+
+    <!-- Show download button if a file is ready -->
+    {% if download_filename %}
+        <h2>Download Your Converted Video</h2>
+        <a href="{{ url_for('download_video', filename=download_filename) }}" download>
+            <button>Download</button>
+        </a>
+    {% endif %}
+
+    <!-- Link to external JavaScript file -->
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
