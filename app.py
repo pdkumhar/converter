@@ -49,24 +49,19 @@ def upload_page():
 def upload_video():
     """Handle video upload and conversion."""
     if 'file' not in request.files:
-        return render_template('upload.html', message="No file part found.")
+        return "No file part"
 
     file = request.files['file']
     format = request.form['format']  # Get the selected format
     if file.filename == '':
-        return render_template('upload.html', message="No file selected.")
+        return "No selected file"
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        # Check if the input format matches the output format
-        input_extension = os.path.splitext(filename)[1].lower().lstrip('.')  # e.g., 'mp4'
-        if input_extension == format.lower():
-            return render_template('upload.html', message="Input and output formats are the same. Conversion is not required.")
-
-        # Proceed with conversion
+        # Convert video after upload
         input_path = filepath
         output_filename = f"{os.path.splitext(filename)[0]}.{format}"
         output_path = os.path.join(app.config['CONVERTED_FOLDER'], output_filename)
@@ -75,11 +70,11 @@ def upload_video():
             if format.lower() == 'wmv':
                 # Use ffmpeg for WMV conversion
                 ffmpeg_command = [
-                    FFMPEG_PATH,
-                    '-y',
+                    FFMPEG_PATH,  # Full path to ffmpeg executable
+                    '-y',  # Overwrite output file without prompting
                     '-i', input_path,
-                    '-c:v', 'wmv2',
-                    '-c:a', 'wmav2',
+                    '-c:v', 'wmv2',  # WMV video codec
+                    '-c:a', 'wmav2',  # WMV audio codec
                     output_path
                 ]
                 subprocess.run(ffmpeg_command, check=True)
@@ -90,16 +85,12 @@ def upload_video():
 
             # Ensure the converted file exists
             if os.path.exists(output_path):
-                return render_template('upload.html', message="Conversion successful!", download_filename=output_filename)
+                return render_template('upload.html', download_filename=output_filename)
             else:
                 return render_template('upload.html', message="Error in video conversion.")
 
-        except subprocess.CalledProcessError as e:
-            return render_template('upload.html', message=f"FFmpeg error: {str(e)}")
         except Exception as e:
-            return render_template('upload.html', message=f"An error occurred during conversion: {str(e)}")
-    else:
-        return render_template('upload.html', message="Invalid file type.")
+            return render_template('upload.html', message=f"Error during conversion: {str(e)}")
 
 
 @app.route('/download/<filename>')

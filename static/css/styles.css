@@ -26,3 +26,20 @@ input[type="file"] {
     border: none;
     border-radius: 5px;
 }
+/* Styling for the loading spinner */
+#loading {
+    display: none;  /* Hidden by default */
+    border: 8px solid #f3f3f3; /* Light gray */
+    border-top: 8px solid #4CAF50; /* Green */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-top: 20px;
+}
+
+/* Animation for spinning */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

@@ -39,6 +39,9 @@
         <button type="submit">Convert</button>
     </form>
 
+    <!-- Loading Spinner -->
+    <div id="loading"></div>
+
     <!-- Show download button if a file is ready -->
     {% if download_filename %}
         <h2>Download Your Converted Video</h2>
@@ -49,5 +52,15 @@
 
     <!-- Link to external JavaScript file -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+    <script>
+        // Show the loading spinner when the form is submitted
+        const form = document.getElementById('uploadForm');
+        form.onsubmit = function() {
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+        };
+    </script>
+
 </body>
 </html>
